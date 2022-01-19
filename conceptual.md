@@ -28,18 +28,44 @@ const App = () => {
 In the above example, there is an App component rendering a div that contains 3 paragraphs. This "HTML-like" JSX will be transcompiled into the correct JS needed to make those HTML elements. 
 
 - How is a Component created in React?
+  
+  A component is created when the function that defines a given component is invoked. <UsernameForm /> would invoke UsernameForm, thus rendering UsernameForm. The component is written in JSX (described above), that JSX is transcompiled into the JS needed to create that particular component. 
+
+  If any state associated with that component changes, that component will be re-rendered. 
 
 - What are some difference between state and props?
 
+  State is mutable, meaning it can change. Assigning new value to state is how React knows to re-render a component. State data is specific to a given component, but the state value and functions used to alter state value can be passed to other components. 
+
+  props are immutable, meaning they cannot be changed. Props are passed into a component during rendering or there can be a default value if nothing is passed in. While props are immutable, we can have dynamic prop values that are created when parent passes state down as props. 
+
+  If the state value changes the parent component will be re-rendered, passing a new prop value to the child. 
+
 - What does "downward data flow" refer to in React?
+
+  Downward Data Flows refers to uni-directional information flow within React. If state changes within a component, that change can only affect the component itself or any children that are receiving that state as a prop. The change cannot flow "up" to the parent of the component or "horizonally" to another unrelated component that isn't a child of the affected component. 
+
+  Downward Data Flow makes our React apps less error prone and easier to debug because we can tell what data is coming from where. 
 
 - What is a controlled component?
 
+  A controlled component is any component that can be completely controlled by React, its value as well as behavior. The state of the input is determined by Reacts own state. 
+  
+  In a controlled input, typing will no have no effect because the value of the form is determined by a state in React. Only by creating some sort of onChange function that updates the state based on user input can will we see any characters appearing in the input. 
+
+  Because the current value of the input is known to React via a state, we can run logic based on whatever is in the input without having to submit the form. For example, we can mandate that a text field but have between 1 and 15 characters and display a warning to the user below the input if they are outside this range. 
+
 - What is an uncontrolled component?
+
+  An uncontrolled component is any component whose state is NOT controlled by React. This is a rare occurance but there are times when we need them. If dealing with a legacy codebase that doesn't use React it may be more hassle than its worth to try to integrate React with all the inputs. Additionally, file inputs have to be uncontrolled because the value is a file coming from the user, wouldn't make any sense for React to determine that value. 
 
 - What is the purpose of the `key` prop when rendering a list of components?
 
+  In React, each child in a list needs to have a unique, stable (not changing) key. The key allows React to determine which items have been added or removed from a list. We want them to be unique so that each key only applies to a single element, if elements share keys that defeats the purpose. Stable means that the key for a given element will have the same value each time it is rendered, we usually achieve this by having the key be an id from a table. 
+
 - Why is using an array index a poor choice for a `key` prop when rendering a list of components?
+
+  Using an array index is a poor choice for a key prop because the index values aren't guaranteed to be stable. If we add, remove, filter, sort elements then the index values will be altered, which in turn changes the key values. If we instead base the key on the id associated with the element from a table then the key is guaranteed to be stable. 
 
 - Describe useEffect.  What use cases is it used for in React components?
 

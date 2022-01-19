@@ -16,6 +16,7 @@ const MadLibForm = ({ setDisplayLib, setMadlibValues }) => {
         onSubmit: values => passValuesToMadLib(values),
     });
 
+    // uses values from forms to create MadLibs and changes state to display them
     const passValuesToMadLib = (values) => {
         setMadlibValues(values);
         setDisplayLib(true);

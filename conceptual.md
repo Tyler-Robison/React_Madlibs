@@ -68,9 +68,36 @@ In the above example, there is an App component rendering a div that contains 3 
   Using an array index is a poor choice for a key prop because the index values aren't guaranteed to be stable. If we add, remove, filter, sort elements then the index values will be altered, which in turn changes the key values. If we instead base the key on the id associated with the element from a table then the key is guaranteed to be stable. 
 
 - Describe useEffect.  What use cases is it used for in React components?
+  useEffect allows you to run code after a component has rendered. The default behavior is that it also runs after all re-renders but this behavior can be altered.  
+
+  Common use cases are:
+  1) When fetching data via an async function useEffect allows us to render the components before async functions return their response values.
+
+  2) When setting a timer useEffect allows us to have a single timer that is re-created with a different starting value on each render instead of starting an additional timer on each render.  
+
 
 - What does useRef do?  Does a change to a ref value cause a rerender of a component?
 
+  useRef returns a mutable object with a key current, whose value is equal to the initial value passed into the hook. This object persists across renders (like state), mutating the object does not trigger a re-render. The returned object acts as a global variable even though it is scopped locally, this is useful if we need to access a variable like a timer id from outside the function that created the timer. Alternative would be using an actual global variable, which we want to avoid. 
+
+
+
 - When would you use a ref? When wouldn't you use one?
 
+  You would use refs if you want to be able to access the value created by useRef independent of scope. For example, if you have a timer function you can set 
+  const timerId = useRef();
+  and then
+  timerId.current = setInterval(async () => {
+  timerIf.current is now the timerId, but can be accessed outside the scope the timer function was declared in. 
+
+  Another common use case would be slecting underlying DOM elements that we want to be able to access outside of the return block of our component. 
+
 - What is a custom hook in React? When would you want to write one?
+
+Custom hooks allow us to share logic between React components. 
+
+We would want to write them if we have logic that will be used in more than 1 component or even if the logic will only be used in 1 component but we want to dry-up the code we could move modular chunks of it into custom hooks. 
+
+An example would be a custom hook that toggles between true/false, which is a common state pattern in react. If we have multiple components that could use such a piece of state (even if they are using for different purposes) then we can create a useToggleState custom hook and import it into all components that need. 
+
+An additional advantage is that if we want to change the toggle behavior we only need to change it in one place instead of changing it in many different components. 
